@@ -125,6 +125,9 @@ def make_guess():
     """
     Function to handle a player's guess
     """
+
+    global last_message = ""
+
     try:
         letter = input("Enter the row (A-J):\n ").upper()
         col = int(input("Enter the column (0-9):\n "))
@@ -141,24 +144,30 @@ def make_guess():
         print("Invalid input. Please enter valid row and column values.")
         return
 
+    # Collect messages to display
+    messages = []
     if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'M':
-        print("You've already tried this cell.")
+        messages.append("You've already tried this cell.")
     elif grid[row][col] == '~':
-        hits_grid[row][col] = 'O'  # Mark missed spot with 'O'
-        print("Miss!")
+        hits_grid[row][col] = 'O'
+        messages.append("Miss!")
     else:
         ship_name = grid[row][col]
-        hits_grid[row][col] = 'H'  # Mark hit ship with 'H'
+        hits_grid[row][col] = 'H'
         ship_hits = sum(1 for r, c in ships[ship_name] if hits_grid[r][c] == 'H')
-        print(f"You hit the {ship_name}!")
+        messages.append(f"You hit the {ship_name}!")
         if ship_hits == SHIP_SIZES[ship_name]:
-            print(f"You sunk the {ship_name}!")
+            messages.append(f"You sunk the {ship_name}!")
+
+    # Update the last_message variable with the most recent message
+    last_message = "\n".join(messages)
 
 while any(ships[ship].count('X') < ship_objects[idx][1] for idx, ship in enumerate(ships)):
     """
     Main game loop
     """
     display_grid()
+    print(last_message)
     make_guess()
 
 
