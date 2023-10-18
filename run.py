@@ -127,6 +127,7 @@ last_message = ""
 # Initialize the remaining ship counts
 remaining_ships = {ship: SHIP_SIZES[ship] for ship in SHIP_SIZES}
 
+
 # Main game loop
 while any(remaining_ships[ship] > 0 for ship in SHIP_SIZES):
     display_grid()
