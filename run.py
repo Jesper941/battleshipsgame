@@ -112,3 +112,16 @@ def make_guess():
         print(f"You hit the {ship_name}!")
         if ship_hits == SHIP_SIZES[ship_name]:
             print(f"You sunk the {ship_name}!")
+
+while any(ships[ship].count('X') < ship_objects[idx][1] for idx, ship in enumerate(ships)):
+    """
+    Main game loop
+    """
+    display_grid()
+    make_guess()
+
+# End screen
+os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
+print("Congratulations, you've sunk all the computer's ships!")
+print(f"Username: {username}")
+print("Game Over!")
