@@ -58,6 +58,7 @@ username = input("Enter your username: ")
 
 def place_ship(ship_name, size):
     orientation = random.choice(['horizontal', 'vertical'])
+    
     while True:
         if orientation == 'horizontal':
             row = random.randint(0, ROWS - 1)
@@ -68,10 +69,15 @@ def place_ship(ship_name, size):
 
         can_place_ship = True  # Variable to track if the ship can be placed
 
+        if orientation == 'horizontal':
+            bounds = range(col, col + size)
+        else:
+            bounds = range(row, row + size)
+
         # Check if the ship can be placed in the selected position
         for r in range(row, row + (size if orientation == 'horizontal' else 1)):
             for c in range(col, col + (size if orientation == 'vertical' else 1)):
-                if grid[r][c] != '~':
+                if r < 0 or r >= ROWS or c < 0 or c >= COLS or grid[r][c] != '~':
                     can_place_ship = False
                     break
 
