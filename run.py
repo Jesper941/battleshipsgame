@@ -90,18 +90,14 @@ def place_ship(ship_name, size):
             ships[ship_name].append((row + i, col))
     return True
 
-
-
 for ship_name, ship_size in SHIP_SIZES.items():
     """
-    Initialize the ships and mark ship locations as '~'
+    Place the ships at the beginning of the game
     """
     ships[ship_name] = []
     ship_objects.append((ship_name, ship_size))
     while not place_ship(ship_name, ship_size):
         ships[ship_name] = []
-        grid = [['~' for _ in range(COLS)] for _ in range(ROWS)]  # Reset the grid
-
 
 def display_grid():
     """
@@ -182,13 +178,6 @@ while not all_ships_sunk():
     display_grid()
     print(last_message)
     make_guess()
-
-# End screen
-os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
-print("Congratulations, you've sunk all the computer's ships!")
-print(f"Username: {username}")
-print("Game Over!")
-
 
 # End screen
 os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
