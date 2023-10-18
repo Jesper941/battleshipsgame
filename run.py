@@ -37,115 +37,84 @@ welcome_art =                   """
 
 """
 
-
 def display_welcome():
-    """
-    Function to display the welcome page and ASCII art
-    """
-    os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
-    print("                          Welcome to Battleship!")
-    print("     Description: In this game, you will play Battleship against the computer.")
-    print("                          Try to sink all the computer's ships to win!")
-    print(welcome_art)  # Display the ASCII art
-
+    os.system('clear' if os.name == 'posix' else 'cls')
+    print("Welcome to Battleship!")
+    print("Description: In this game, you will play Battleship against the computer.")
+    print("Try to sink all the computer's ships to win!")
+    print(welcome_art)
 
 # Display the welcome page
 display_welcome()
 
 # Ask the player if they want to start the game
-start_game = input("Do you want to start the game? (y/n):\n ").lower()
+start_game = input("Do you want to start the game? (y/n): ").lower()
 if start_game != 'y':
     print("Goodbye! Come back to play later.")
     exit()
 
 # Ask the player to enter their username
-username = input("Enter your username:\n ")
-
+username = input("Enter your username: ")
 
 def place_ship(ship_name, size):
-    """
-    Function to place a ship on the grid
-    """
     orientation = random.choice(['horizontal', 'vertical'])
-    row = random.randint(0, ROWS - 1)
-    col = random.randint(0, COLS - 1)
+    while True:
+        if orientation == 'horizontal':
+            row = random.randint(0, ROWS - 1)
+            col = random.randint(0, COLS - size)
+        else:  # vertical
+            row = random.randint(0, ROWS - size)
+            col = random.randint(0, COLS - 1)
 
-    if orientation == 'horizontal':
-        if col + size > COLS:
-            return False
-        for i in range(size):
-            if grid[row][col + i] != '~':
-                return False
-        for i in range(size):
-            grid[row][col + i] = ship_name
-            ships[ship_name].append((row, col + i))
-    else:  # vertical
-        if row + size > ROWS:
-            return False
-        for i in range(size):
-            if grid[row + i][col] != '~':
-                return False
-        for i in range(size):
-            grid[row + i][col] = ship_name
-            ships[ship_name].append((row + i, col))
-    return True
+        if all(grid[r][c] == '~' for r in range(row, row + (size if orientation == 'horizontal' else 1))
+               for c in range(col, col + (size if orientation == 'vertical' else 1))):
+            for i in range(size):
+                if orientation == 'horizontal':
+                    grid[row][col + i] = ship_name
+                    ships[ship_name].append((row, col + i))
+                else:
+                    grid[row + i][col] = ship_name
+                    ships[ship_name].append((row + i, col))
+            break
 
 for ship_name, ship_size in SHIP_SIZES.items():
-    """
-    Place the ships at the beginning of the game
-    """
     ships[ship_name] = []
     ship_objects.append((ship_name, ship_size))
     while not place_ship(ship_name, ship_size):
         ships[ship_name] = []
 
 def display_grid():
-    """
-    Function to display the grid with ships hidden
-    """
-    os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
-    print("  0 1 2 3 4 5 6 7 8 9")  # Display column numbers
+    os.system('clear' if os.name == 'posix' else 'cls')
+    print("  0 1 2 3 4 5 6 7 8 9")
     for row_idx, row in enumerate(grid):
         display_row = []
         for col_idx, col in enumerate(row):
             if hits_grid[row_idx][col_idx] == 'H':
-                display_row.append('X')  # Show 'X' for hits
+                display_row.append('X')
             elif hits_grid[row_idx][col_idx] == 'O':
-                display_row.append('O')  # Show 'O' for misses
+                display_row.append('O')
             else:
-                display_row.append('~')  # Show '~' for unguessed spots
-        print(f"{chr(65 + row_idx)} {' '.join(display_row)}")  # Use letters for rows
-    print("\n")
-
-global last_message
-last_message = ""
+                display_row.append('~')
+        print(f"{chr(65 + row_idx)} {' '.join(display_row)}")
 
 def make_guess():
-    """
-    Handles players guesses and posts the hit or miss message.
-    """
-    global last_message  # Declare the variable as global
-
+    global last_message
     while True:
-        messages = []  # Initialize the messages list
-
+        messages = []
         try:
             letter = input("Enter the row (A-J): ").upper()
             if letter not in letter_to_row:
                 print("Invalid input. Please enter letters between A and J.")
-                continue  # Restart the loop to get valid input
+                continue
             col = int(input("Enter the column (0-9): "))
-
             if col < 0 or col >= COLS:
                 print("Invalid input. Please enter numbers between 0 and 9.")
-                continue  # Restart the loop to get valid input
-
+                continue
             row = letter_to_row[letter]
         except ValueError:
             print("Invalid input. Please enter valid row and column values.")
-            continue  # Restart the loop to get valid input
-
-        if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'M':
+            continue
+        if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'O':
             messages.append("You've already tried this cell.")
         elif grid[row][col] == '~':
             hits_grid[row][col] = 'O'
@@ -157,30 +126,20 @@ def make_guess():
             messages.append(f"You hit the {ship_name}!")
             if ship_hits == SHIP_SIZES[ship_name]:
                 messages.append(f"You sunk the {ship_name}!")
-
-        last_message = "\n".join(messages)  # Update the last_message variable with the most recent message
-        break  # Exit the loop when a valid guess is made
+        last_message = "\n".join(messages)
+        break
 
 def all_ships_sunk():
-    """
-    Checks if all ships are sunk
-    """
-    for ship in ships:
-        if 'X' in ships[ship]:
+    for ship_name, ship_size in SHIP_SIZES.items():
+        if sum(1 for r, c in ships[ship_name] if hits_grid[r][c] == 'H') < ship_size:
             return False
     return True
 
-# The main game loop
-while True:
+while not all_ships_sunk():
     display_grid()
-    print(last_message)
     make_guess()
 
-    if all_ships_sunk():
-        break  # Exit the game loop if all ships are sunk
-
-# End screen
-os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
+os.system('clear' if os.name == 'posix' else 'cls')
 print("Congratulations, you've sunk all the computer's ships!")
 print(f"Username: {username}")
 print("Game Over!")
