@@ -66,8 +66,17 @@ def place_ship(ship_name, size):
             row = random.randint(0, ROWS - size)
             col = random.randint(0, COLS - 1)
 
-        if all(grid[r][c] == '~' for r in range(row, row + (size if orientation == 'horizontal' else 1))
-               for c in range(col, col + (size if orientation == 'vertical' else 1))):
+        can_place_ship = True  # Variable to track if the ship can be placed
+
+        # Check if the ship can be placed in the selected position
+        for r in range(row, row + (size if orientation == 'horizontal' else 1)):
+            for c in range(col, col + (size if orientation == 'vertical' else 1)):
+                if grid[r][c] != '~':
+                    can_place_ship = False
+                    break
+
+        if can_place_ship:
+            # Place the ship
             for i in range(size):
                 if orientation == 'horizontal':
                     grid[row][col + i] = ship_name
