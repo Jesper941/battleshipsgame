@@ -58,7 +58,7 @@ display_welcome()
 start_game = input("Do you want to start the game? (y/n):\n ").lower()
 if start_game != 'y':
     print("Goodbye! Come back to play later.")
-    sys.exit()
+    exit()
 
 # Ask the player to enter their username
 username = input("Enter your username:\n ")
