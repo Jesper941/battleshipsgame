@@ -131,24 +131,23 @@ def make_guess():
 
     global last_message
 
+    messages = []
+
     try:
         letter = input("Enter the row (A-J):\n ").upper()
         col = int(input("Enter the column (0-9):\n "))
 
         if letter not in letter_to_row:
-            print("Invalid input. Please enter letters between A and J.")
+            messages.append("Invalid input. Please enter letters between A and J.")
             return
         row = letter_to_row[letter]
     except ValueError:
-        print("Invalid input. Please enter numbers between 0 and 9.")
-        return
-
+         messages.append("Invalid input. Please enter numbers between 0 and 9.")
+         return
     if row < 0 or row >= ROWS or col < 0 or col >= COLS:
-        print("Invalid input. Please enter valid row and column values.")
+        messages.append("Invalid input. Please enter valid row and column values.")
         return
 
-    # Collect messages to display
-    messages = []
     if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'M':
         messages.append("You've already tried this cell.")
     elif grid[row][col] == '~':
