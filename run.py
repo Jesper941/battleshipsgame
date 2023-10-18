@@ -165,13 +165,30 @@ def make_guess():
         last_message = "\n".join(messages)  # Update the last_message variable with the most recent message
         break  # Exit the loop when a valid guess is made
 
-while any(ships[ship].count('X') < ship_objects[idx][1] for idx, ship in enumerate(ships)):
+
+def all_ships_sunk():
     """
-    Main game loop
+    Checks if all ships are sunk
+    """
+    for ship in ships:
+        if 'X' in ships[ship]:
+            return False
+    return True
+
+while not all_ships_sunk():
+    """
+    Main game loop that keeps game going until all ships are sunk
     """
     display_grid()
     print(last_message)
     make_guess()
+
+# End screen
+os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
+print("Congratulations, you've sunk all the computer's ships!")
+print(f"Username: {username}")
+print("Game Over!")
+
 
 # End screen
 os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
