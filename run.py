@@ -161,6 +161,15 @@ def make_guess():
         last_message = "\n".join(messages)  # Update the last_message variable with the most recent message
         break  # Exit the loop when a valid guess is made
 
+def all_ships_sunk():
+    """
+    Checks if all ships are sunk
+    """
+    for ship in ships:
+        if 'X' in ships[ship]:
+            return False
+    return True
+
 # The main game loop
 while True:
     display_grid()
