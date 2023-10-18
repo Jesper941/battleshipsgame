@@ -121,12 +121,15 @@ def display_grid():
         print(f"{chr(65 + row_idx)} {' '.join(display_row)}")  # Use letters for rows
     print("\n")
 
+global last_message
+last_message = ""
+
 def make_guess():
     """
     Function to handle a player's guess
     """
 
-    global last_message = ""
+    global last_message
 
     try:
         letter = input("Enter the row (A-J):\n ").upper()
