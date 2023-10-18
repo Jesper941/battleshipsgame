@@ -124,26 +124,27 @@ def display_grid():
 global last_message
 last_message = ""
 
-while not all(all(cell == 'X' for cell in row) for row in grid):
-    """
-    Main game loop
-    """
+# Initialize the remaining ship counts
+remaining_ships = {ship: SHIP_SIZES[ship] for ship in SHIP_SIZES}
+
+# Main game loop
+while any(remaining_ships[ship] > 0 for ship in SHIP_SIZES):
     display_grid()
     print(last_message)
-    # Get user's guess
+
     try:
         letter = input("Enter the row (A-J): ").upper()
         if letter not in letter_to_row:
             print("Invalid input. Please enter letters between A and J.")
-            continue  # Restart the loop to get valid input
+            continue
         col = int(input("Enter the column (0-9): "))
         if col < 0 or col >= COLS:
             print("Invalid input. Please enter numbers between 0 and 9.")
-            continue  # Restart the loop to get valid input
+            continue
         row = letter_to_row[letter]
     except ValueError:
         print("Invalid input. Please enter valid row and column values.")
-        continue  # Restart the loop to get valid input
+        continue
 
     if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'M':
         last_message = "You've already tried this cell."
@@ -153,9 +154,9 @@ while not all(all(cell == 'X' for cell in row) for row in grid):
     else:
         ship_name = grid[row][col]
         hits_grid[row][col] = 'H'
-        ship_hits = sum(1 for r, c in ships[ship_name] if hits_grid[r][c] == 'H')
+        remaining_ships[ship_name] -= 1
         last_message = f"You hit the {ship_name}!"
-        if ship_hits == SHIP_SIZES[ship_name]:
+        if remaining_ships[ship_name] == 0:
             last_message = f"You sunk the {ship_name}!"
 
 # End screen
