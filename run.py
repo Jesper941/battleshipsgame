@@ -28,39 +28,35 @@ welcome_art =                   """
                                     _  |____________|  _
                              _=====| | |            | | |==== _
                         =====| |.------------------------. | |====
-     <------------------'   .    .    .    .    .    .   .    . '------------/
-       \                                                                    /
-        \______________________________________________________SRN_________/
-   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+   <------------------'   .    .    .    .    .    .   .    . '------------/
+     \                                                                    /
+      \______________________________________________________SRN_________/
+   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 """
-
-
 def display_welcome():
     """
     Function to display the welcome page and ASCII art
     """
     os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
-    print("                          Welcome to Battleship!")
-    print("     Description: In this game, you will play Battleship against the computer.")
-    print("                          Try to sink all the computer's ships to win!")
+    print("Welcome to Battleship!")
+    print("Description: In this game, you will play Battleship against the computer.")
+    print("Try to sink all the computer's ships to win!")
     print(welcome_art)  # Display the ASCII art
-
 
 # Display the welcome page
 display_welcome()
 
 # Ask the player if they want to start the game
-start_game = input("Do you want to start the game? (y/n):\n ").lower()
+start_game = input("Do you want to start the game? (y/n): ").lower()
 if start_game != 'y':
     print("Goodbye! Come back to play later.")
     exit()
 
 # Ask the player to enter their username
-username = input("Enter your username:\n ")
-
+username = input("Enter your username: ")
 
 def place_ship(ship_name, size):
     """
@@ -90,8 +86,6 @@ def place_ship(ship_name, size):
             ships[ship_name].append((row + i, col))
     return True
 
-
-
 for ship_name, ship_size in SHIP_SIZES.items():
     """
     Initialize the ships and mark ship locations as '~'
@@ -101,7 +95,6 @@ for ship_name, ship_size in SHIP_SIZES.items():
     while not place_ship(ship_name, ship_size):
         ships[ship_name] = []
         grid = [['~' for _ in range(COLS)] for _ in range(ROWS)]  # Reset the grid
-
 
 def display_grid():
     """
@@ -124,48 +117,43 @@ def display_grid():
 global last_message
 last_message = ""
 
-hile True:
-        try:
-            letter = input("Enter the row (A-J): ").upper()
-            if letter not in letter_to_row:
-                print("Invalid input. Please enter letters between A and J.")
-                continue  # Restart the loop to get valid input
-            col = int(input("Enter the column (0-9): "))
-
-            if col < 0 or col >= COLS:
-                print("Invalid input. Please enter numbers between 0 and 9.")
-                continue  # Restart the loop to get valid input
-
-            row = letter_to_row[letter]
-        except ValueError:
-            print("Invalid input. Please enter valid row and column values.")
-            continue  # Restart the loop to get valid input
-
-        if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'M':
-            print("You've already tried this cell.")
-        elif grid[row][col] == '~':
-            hits_grid[row][col] = 'O'
-            last_message = "Miss!"
-        else:
-            ship_name = grid[row][col]
-            hits_grid[row][col] = 'H'
-            ship_hits = sum(1 for r, c in ships[ship_name] if hits_grid[r][c] == 'H')
-            last_message = f"You hit the {ship_name}!"
-            if ship_hits == SHIP_SIZES[ship_name]:
-                last_message = f"You sunk the {ship_name}!"
-        break  # Exit the loop when a valid guess is made
-
 while any(ships[ship].count('X') < ship_objects[idx][1] for idx, ship in enumerate(ships)):
     """
     Main game loop
     """
     display_grid()
     print(last_message)
-    make_guess()
+    # Get user's guess
+    try:
+        letter = input("Enter the row (A-J): ").upper()
+        if letter not in letter_to_row:
+            print("Invalid input. Please enter letters between A and J.")
+            continue  # Restart the loop to get valid input
+        col = int(input("Enter the column (0-9): "))
+        if col < 0 or col >= COLS:
+            print("Invalid input. Please enter numbers between 0 and 9.")
+            continue  # Restart the loop to get valid input
+        row = letter_to_row[letter]
+    except ValueError:
+        print("Invalid input. Please enter valid row and column values.")
+        continue  # Restart the loop to get valid input
 
+    if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'M':
+        last_message = "You've already tried this cell."
+    elif grid[row][col] == '~':
+        hits_grid[row][col] = 'O'
+        last_message = "Miss!"
+    else:
+        ship_name = grid[row][col]
+        hits_grid[row][col] = 'H'
+        ship_hits = sum(1 for r, c in ships[ship_name] if hits_grid[r][c] == 'H')
+        last_message = f"You hit the {ship_name}!"
+        if ship_hits == SHIP_SIZES[ship_name]:
+            last_message = f"You sunk the {ship_name}!"
 
 # End screen
 os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
 print("Congratulations, you've sunk all the computer's ships!")
 print(f"Username: {username}")
 print("Game Over!")
+
