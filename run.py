@@ -165,7 +165,7 @@ def make_guess():
         last_message = "\n".join(messages)  # Update the last_message variable with the most recent message
         break  # Exit the loop when a valid guess is made
 
-while any('X' in row for row in hits_grid):
+while any(ships[ship].count('X') < ship_objects[idx][1] for idx, ship in enumerate(ships)):
     """
     Main game loop
     """
