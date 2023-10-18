@@ -161,6 +161,7 @@ while any(ships[ship].count('X') < ship_objects[idx][1] for idx, ship in enumera
     display_grid()
     make_guess()
 
+
 # End screen
 os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
 print("Congratulations, you've sunk all the computer's ships!")
