@@ -21,6 +21,49 @@ ship_objects = []
 # Create a mapping of letters to row numbers
 letter_to_row = {letter: row for row, letter in enumerate('ABCDEFGHIJ')}
 
+# ASCII art for the welcome page
+welcome_art =                   """
+                                                                            # #  ( )
+                                                                    ___#_#___|__
+                                                            _  |____________|  _
+                                                    _=====| | |            | | |==== _
+                                          =====| |.---------------------------. | |====
+         <- - - - - - - - - - - - - - - - - - - -'   .    .    .    .    .    .    .    .   '- - - - - - - - - - - - - -/
+             \                                                                                                         /
+              \___________________________________________________________________________________________SRN_________/
+  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+"""
+
+# Welcome screen and description
+os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
+print("                                               Welcome to Battleship!")
+print("             Description: In this game, you will play Battleship against the computer.")
+print("                                  Try to sink all the computer's ships to win!")
+print()
+
+
+def display_welcome():
+    """
+     Function to display the welcome page
+    """
+    os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
+    print(welcome_art)
+
+# Display the welcome page
+display_welcome()
+
+# Ask the player if they want to start the game
+start_game = input("Do you want to start the game? (y/n):\n ").lower()
+if start_game != 'y':
+    print("Goodbye! Come back to play later.")
+    sys.exit()
+
+# Ask the player to enter their username
+username = input("Enter your username:\n ")
+
+
 def place_ship(ship_name, size):
     """
     Function to place a ship on the grid
