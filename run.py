@@ -117,7 +117,7 @@ def display_grid():
 global last_message
 last_message = ""
 
-while not all(ships[ship].count('X') == ship_objects[idx][1] for idx, ship in enumerate(ships)):
+while not all(all(cell == 'X' for cell in row) for row in grid):
     """
     Main game loop
     """
