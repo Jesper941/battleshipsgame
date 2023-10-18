@@ -117,7 +117,8 @@ def display_grid():
 global last_message
 last_message = ""
 
-while not all(all(cell == 'X' for cell in row) for row in grid):
+while any(cell != '~' for row in grid for cell in row):
+
     """
     Main game loop
     """
