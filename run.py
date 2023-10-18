@@ -117,11 +117,8 @@ def display_grid():
 global last_message
 last_message = ""
 
-while any(cell != '~' for row in grid for cell in row):
-
-    """
-    Main game loop
-    """
+while not all(all(cell == 'X' for cell in row) for row in grid):
+    # Main game loop
     display_grid()
     print(last_message)
     # Get user's guess
@@ -157,4 +154,3 @@ os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
 print("Congratulations, you've sunk all the computer's ships!")
 print(f"Username: {username}")
 print("Game Over!")
-
