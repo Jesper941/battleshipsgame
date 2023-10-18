@@ -22,7 +22,7 @@ ship_objects = []
 letter_to_row = {letter: row for row, letter in enumerate('ABCDEFGHIJ')}
 
 # ASCII art for the welcome page
-welcome_art = """
+welcome_art =                   """
                                             # #  ( )
                                         ___#_#___|__
                                     _  |____________|  _
@@ -32,12 +32,10 @@ welcome_art = """
      \                                                                    /
       \______________________________________________________SRN_________/
    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 """
-
-
 def display_welcome():
     """
     Function to display the welcome page and ASCII art
@@ -47,7 +45,6 @@ def display_welcome():
     print("Description: In this game, you will play Battleship against the computer.")
     print("Try to sink all the computer's ships to win!")
     print(welcome_art)  # Display the ASCII art
-
 
 # Display the welcome page
 display_welcome()
@@ -61,35 +58,33 @@ if start_game != 'y':
 # Ask the player to enter their username
 username = input("Enter your username: ")
 
-
 def place_ship(ship_name, size):
     """
     Function to place a ship on the grid
     """
-    while True:
-        orientation = random.choice(['horizontal', 'vertical'])
-        row = random.randint(0, ROWS - 1)
-        col = random.randint(0, COLS - 1)
+    orientation = random.choice(['horizontal', 'vertical'])
+    row = random.randint(0, ROWS - 1)
+    col = random.randint(0, COLS - 1)
 
-        if orientation == 'horizontal':
-            if col + size > COLS:
-                continue
-            valid = all(grid[row][col + i] == '~' for i in range(size))
-            if valid:
-                for i in range(size):
-                    grid[row][col + i] = ship_name
-                    ships[ship_name].append((row, col + i))
-                break
-        else:  # vertical
-            if row + size > ROWS:
-                continue
-            valid = all(grid[row + i][col] == '~' for i in range(size))
-            if valid:
-                for i in range(size):
-                    grid[row + i][col] = ship_name
-                    ships[ship_name].append((row + i, col))
-                break
-
+    if orientation == 'horizontal':
+        if col + size > COLS:
+            return False
+        for i in range(size):
+            if grid[row][col + i] != '~':
+                return False
+        for i in range(size):
+            grid[row][col + i] = ship_name
+            ships[ship_name].append((row, col + i))
+    else:  # vertical
+        if row + size > ROWS:
+            return False
+        for i in range(size):
+            if grid[row + i][col] != '~':
+                return False
+        for i in range(size):
+            grid[row + i][col] = ship_name
+            ships[ship_name].append((row + i, col))
+    return True
 
 for ship_name, ship_size in SHIP_SIZES.items():
     """
@@ -97,9 +92,9 @@ for ship_name, ship_size in SHIP_SIZES.items():
     """
     ships[ship_name] = []
     ship_objects.append((ship_name, ship_size))
-    while True:
-        place_ship(ship_name, ship_size)
-        break
+    while not place_ship(ship_name, ship_size):
+        ships[ship_name] = []
+        grid = [['~' for _ in range(COLS)] for _ in range(ROWS)]  # Reset the grid
 
 def display_grid():
     """
@@ -119,14 +114,11 @@ def display_grid():
         print(f"{chr(65 + row_idx)} {' '.join(display_row)}")  # Use letters for rows
     print("\n")
 
-
 global last_message
 last_message = ""
 
 while not all(all(cell == 'X' for cell in row) for row in grid):
-    """
-    Main game loop
-    """
+    # Main game loop
     display_grid()
     print(last_message)
     # Get user's guess
@@ -138,7 +130,7 @@ while not all(all(cell == 'X' for cell in row) for row in grid):
         col = int(input("Enter the column (0-9): "))
         if col < 0 or col >= COLS:
             print("Invalid input. Please enter numbers between 0 and 9.")
-        continue  # Restart the loop to get valid input
+            continue  # Restart the loop to get valid input
         row = letter_to_row[letter]
     except ValueError:
         print("Invalid input. Please enter valid row and column values.")
