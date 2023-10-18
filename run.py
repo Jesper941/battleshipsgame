@@ -126,43 +126,44 @@ last_message = ""
 
 def make_guess():
     """
-    Function to handle a player's guess
+    Handles players guesses and posts the hit or miss message.
     """
+    global last_message  # Declare the variable as global
 
-    global last_message
+    while True:
+        messages = []  # Initialize the messages list
 
-    messages = []
+        try:
+            letter = input("Enter the row (A-J): ").upper()
+            if letter not in letter_to_row:
+                print("Invalid input. Please enter letters between A and J.")
+                continue  # Restart the loop to get valid input
+            col = int(input("Enter the column (0-9): "))
 
-    try:
-        letter = input("Enter the row (A-J):\n ").upper()
-        col = int(input("Enter the column (0-9):\n "))
+            if col < 0 or col >= COLS:
+                print("Invalid input. Please enter numbers between 0 and 9.")
+                continue  # Restart the loop to get valid input
 
-        if letter not in letter_to_row:
-            messages.append("Invalid input. Please enter letters between A and J.")
-            return
-        row = letter_to_row[letter]
-    except ValueError:
-         messages.append("Invalid input. Please enter numbers between 0 and 9.")
-         return
-    if row < 0 or row >= ROWS or col < 0 or col >= COLS:
-        messages.append("Invalid input. Please enter valid row and column values.")
-        return
+            row = letter_to_row[letter]
+        except ValueError:
+            print("Invalid input. Please enter valid row and column values.")
+            continue  # Restart the loop to get valid input
 
-    if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'M':
-        messages.append("You've already tried this cell.")
-    elif grid[row][col] == '~':
-        hits_grid[row][col] = 'O'
-        messages.append("Miss!")
-    else:
-        ship_name = grid[row][col]
-        hits_grid[row][col] = 'H'
-        ship_hits = sum(1 for r, c in ships[ship_name] if hits_grid[r][c] == 'H')
-        messages.append(f"You hit the {ship_name}!")
-        if ship_hits == SHIP_SIZES[ship_name]:
-            messages.append(f"You sunk the {ship_name}!")
+        if hits_grid[row][col] == 'H' or hits_grid[row][col] == 'M':
+            messages.append("You've already tried this cell.")
+        elif grid[row][col] == '~':
+            hits_grid[row][col] = 'O'
+            messages.append("Miss!")
+        else:
+            ship_name = grid[row][col]
+            hits_grid[row][col] = 'H'
+            ship_hits = sum(1 for r, c in ships[ship_name] if hits_grid[r][c] == 'H')
+            messages.append(f"You hit the {ship_name}!")
+            if ship_hits == SHIP_SIZES[ship_name]:
+                messages.append(f"You sunk the {ship_name}!")
 
-    # Update the last_message variable with the most recent message
-    last_message = "\n".join(messages)
+        last_message = "\n".join(messages)  # Update the last_message variable with the most recent message
+        break  # Exit the loop when a valid guess is made
 
 while any(ships[ship].count('X') < ship_objects[idx][1] for idx, ship in enumerate(ships)):
     """
