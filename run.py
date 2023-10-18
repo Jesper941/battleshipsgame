@@ -8,10 +8,6 @@ COLS = 10
 # Constants for ship sizes
 SHIP_SIZES = {'Carrier': 5, 'Battleship': 4, 'Cruiser': 3, 'Submarine': 3, 'Destroyer': 2}
 
-# Create an empty grid and a grid to track hits, initially marking ship locations as '~'
-grid = [['~' for _ in range(COLS)] for _ in range(ROWS)]
-hits_grid = [['~' for _ in range(COLS)] for _ in range(ROWS)]
-
 # Create a dictionary to store ship data
 ships = {}
 
@@ -21,8 +17,12 @@ ship_objects = []
 # Create a mapping of letters to row numbers
 letter_to_row = {letter: row for row, letter in enumerate('ABCDEFGHIJ')}
 
+# Create an empty grid and a grid to track hits, initially marking ship locations as '~'
+grid = [['~' for _ in range(COLS)] for _ in range(ROWS)]
+hits_grid = [['~' for _ in range(COLS)] for _ in range(ROWS)]
+
 # ASCII art for the welcome page
-welcome_art = """
+welcome_art =                   """
                                             # #  ( )
                                         ___#_#___|__
                                     _  |____________|  _
@@ -34,8 +34,8 @@ welcome_art = """
    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-"""
 
+"""
 
 def display_welcome():
     os.system('clear' if os.name == 'posix' else 'cls')
@@ -43,7 +43,6 @@ def display_welcome():
     print("Description: In this game, you will play Battleship against the computer.")
     print("Try to sink all the computer's ships to win!")
     print(welcome_art)
-
 
 # Display the welcome page
 display_welcome()
