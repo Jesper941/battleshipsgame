@@ -23,17 +23,18 @@ letter_to_row = {letter: row for row, letter in enumerate('ABCDEFGHIJ')}
 
 # ASCII art for the welcome page
 welcome_art =                   """
-                                                                            # #  ( )
-                                                                    ___#_#___|__
-                                                            _  |____________|  _
-                                                    _=====| | |            | | |==== _
-                                          =====| |.---------------------------. | |====
-         <- - - - - - - - - - - - - - - - - - - -'   .    .    .    .    .    .    .    .   '- - - - - - - - - - - - - -/
-             \                                                                                                         /
-              \___________________________________________________________________________________________SRN_________/
-  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                                            # #  ( )
+                                        ___#_#___|__
+                                    _  |____________|  _
+                             _=====| | |            | | |==== _
+                        =====| |.---------------------------. | |====
+     <--------------------'   .    .    .    .    .    .   .    . '--------------/
+       \                                                                        /
+        \__________________________________________________________SRN_________/
+  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww 
+  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
 """
 
 # Welcome screen and description
