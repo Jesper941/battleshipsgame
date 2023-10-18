@@ -22,7 +22,7 @@ ship_objects = []
 letter_to_row = {letter: row for row, letter in enumerate('ABCDEFGHIJ')}
 
 # ASCII art for the welcome page
-welcome_art =                   """
+welcome_art = """
                                             # #  ( )
                                         ___#_#___|__
                                     _  |____________|  _
@@ -34,8 +34,8 @@ welcome_art =                   """
    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-
 """
+
 
 def display_welcome():
     os.system('clear' if os.name == 'posix' else 'cls')
@@ -43,6 +43,7 @@ def display_welcome():
     print("Description: In this game, you will play Battleship against the computer.")
     print("Try to sink all the computer's ships to win!")
     print(welcome_art)
+
 
 # Display the welcome page
 display_welcome()
@@ -56,9 +57,10 @@ if start_game != 'y':
 # Ask the player to enter their username
 username = input("Enter your username: ")
 
+
 def place_ship(ship_name, size):
     orientation = random.choice(['horizontal', 'vertical'])
-    
+
     while True:
         if orientation == 'horizontal':
             row = random.randint(0, ROWS - 1)
@@ -92,11 +94,13 @@ def place_ship(ship_name, size):
                     ships[ship_name].append((row + i, col))
             break
 
+
 for ship_name, ship_size in SHIP_SIZES.items():
     ships[ship_name] = []
     ship_objects.append((ship_name, ship_size))
     while not place_ship(ship_name, ship_size):
         ships[ship_name] = []
+
 
 def display_grid():
     os.system('clear' if os.name == 'posix' else 'cls')
@@ -111,6 +115,7 @@ def display_grid():
             else:
                 display_row.append('~')
         print(f"{chr(65 + row_idx)} {' '.join(display_row)}")
+
 
 def make_guess():
     global last_message
@@ -144,11 +149,13 @@ def make_guess():
         last_message = "\n".join(messages)
         break
 
+
 def all_ships_sunk():
     for ship_name, ship_size in SHIP_SIZES.items():
         if sum(1 for r, c in ships[ship_name] if hits_grid[r][c] == 'H') < ship_size:
             return False
     return True
+
 
 while not all_ships_sunk():
     display_grid()
