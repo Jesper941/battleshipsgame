@@ -27,13 +27,13 @@ welcome_art =                   """
                                         ___#_#___|__
                                     _  |____________|  _
                              _=====| | |            | | |==== _
-                        =====| |.---------------------------. | |====
-     <--------------------'   .    .    .    .    .    .   .    . '--------------/
-       \                                                                        /
-        \__________________________________________________________SRN_________/
-  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww 
-  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                        =====| |.------------------------. | |====
+     <------------------'   .    .    .    .    .    .   .    . '------------/
+       \                                                                    /
+        \______________________________________________________SRN_________/
+   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 """
 
