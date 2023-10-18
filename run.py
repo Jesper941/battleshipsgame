@@ -43,9 +43,9 @@ def display_welcome():
     Function to display the welcome page and ASCII art
     """
     os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal screen
-    print("                                               Welcome to Battleship!")
-    print("             Description: In this game, you will play Battleship against the computer.")
-    print("                                  Try to sink all the computer's ships to win!")
+    print("                          Welcome to Battleship!")
+    print("     Description: In this game, you will play Battleship against the computer.")
+    print("                          Try to sink all the computer's ships to win!")
     print(welcome_art)  # Display the ASCII art
 
 
